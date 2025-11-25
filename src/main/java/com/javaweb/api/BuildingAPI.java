@@ -4,35 +4,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javaweb.beans.BuildingDTO;
 import com.javaweb.beans.ErrorResponseDTO;
 
+import customException.FieldRequiredException;
+
 @RestController
 public class BuildingAPI {
-	@GetMapping("/test-error")
+	@GetMapping("/test-custom-exception")
 	// return Object
-	public Object getBuilding() {
-		BuildingDTO buildingDTO = new BuildingDTO();
+	public Object getBuilding(@RequestBody BuildingDTO buildingDTO) {
 
-		ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO();
+		// validate buildingDTO
 		try {
-			// error
-			System.out.println(5 / 0);
-		} catch (Exception e) {
+			isNullOrEmpty(buildingDTO);
+		} catch (FieldRequiredException e) {
+			ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO();
 			errorResponseDTO.setNameOfError(e.getMessage());
 			List<String> detailsList = new ArrayList<>();
-			detailsList.add("Error divide by 0");
-			detailsList.add("Error input < 10");
+			// add details for exception
+			detailsList.add("Requird re-check input name");
+			detailsList.add("Requird re-check input floor");
+			detailsList.add("Requird re-check input price");
 			errorResponseDTO.setDetails(detailsList);
 			// return error
 			return errorResponseDTO;
 		}
+		// else return Success
+		return "Success";
+	}
 
-		buildingDTO.setName("Vinhome");
-		buildingDTO.setFloor(10);
-		// return Object BuildingDTO
-		return buildingDTO;
+	// check is input null or empty
+	private void isNullOrEmpty(BuildingDTO buildingDTO) throws FieldRequiredException {
+		if (buildingDTO.getName() == null || buildingDTO.getName().equals("") || buildingDTO.getFloor() == null
+				|| buildingDTO.getPrice() == null) {
+			// return name of exception
+			throw new FieldRequiredException("Input can not be empty");
+		}
 	}
 }
