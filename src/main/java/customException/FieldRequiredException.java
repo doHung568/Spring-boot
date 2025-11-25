@@ -1,6 +1,6 @@
 package customException;
 
-public class FieldRequiredException extends Exception {
+public class FieldRequiredException extends RuntimeException {
 
 	/**
 	 * 

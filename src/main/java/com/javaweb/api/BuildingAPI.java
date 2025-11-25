@@ -38,7 +38,7 @@ public class BuildingAPI {
 	}
 
 	// check is input null or empty
-	private void isNullOrEmpty(BuildingDTO buildingDTO) throws FieldRequiredException {
+	private void isNullOrEmpty(BuildingDTO buildingDTO) {
 		if (buildingDTO.getName() == null || buildingDTO.getName().equals("") || buildingDTO.getFloor() == null
 				|| buildingDTO.getPrice() == null) {
 			// return name of exception
