@@ -3,7 +3,7 @@ package com.javaweb.beans;
 public class BuildingDTO {
 	private String name;
 	private Integer floor;
-	private Integer price;
+	private Long price;
 
 	/**
 	 * @return the name
@@ -36,14 +36,14 @@ public class BuildingDTO {
 	/**
 	 * @return the price
 	 */
-	public Integer getPrice() {
+	public Long getPrice() {
 		return price;
 	}
 
 	/**
 	 * @param price the price to set
 	 */
-	public void setPrice(Integer price) {
+	public void setPrice(Long price) {
 		this.price = price;
 	}
 
