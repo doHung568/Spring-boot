@@ -1,23 +1,38 @@
 package com.javaweb.api;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.javaweb.beans.BuildingDTO;
+
+import customException.FieldRequiredException;
 
 @RestController
 public class BuildingAPI {
-	@PostMapping({ "/api/building/{id}", "/api/building/{id}/{name}" })
-	public String updateBuilding(@PathVariable(required = false) String id, @PathVariable(required = false) String name,
-			@RequestParam(value = "xM", required = false) String xM) {
-		if (id == null) {
-			id = "Missing id";
-		}
+	@GetMapping("/test-custom-exception")
+	// return Object
+	public Object getBuilding(@RequestBody BuildingDTO buildingDTO) {
+		// validate buildingDTO
+		isNullOrEmpty(buildingDTO);
+		// else return Success
+		return "Success";
+	}
 
-		if (name == null) {
-			name = "Missing name";
+	// check is input null or empty
+	private void isNullOrEmpty(BuildingDTO buildingDTO) {
+		if (buildingDTO.getName() == null || buildingDTO.getName().equals("") || buildingDTO.getFloor() == null
+				|| buildingDTO.getPrice() == null) {
+			// return name of exception
+			// when throw exception -> Spring MVC scan @ExceptionHanlder
+			throw new FieldRequiredException("Input can not be empty");
 		}
+	}
 
-		return id + " " + name + " " + xM;
+	@GetMapping("/test-controllerAdvice")
+	public void test() {
+
+		System.out.println(5 / 0);
+
 	}
 }
