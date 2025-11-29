@@ -1,9 +1,10 @@
-package com.javaweb.beans;
+package com.javaweb.model;
 
 public class BuildingDTO {
 	private String name;
-	private Integer floor;
-	private Long price;
+	private int floor;
+	private long beforePrice;
+	private long afterPrice;
 
 	/**
 	 * @return the name
@@ -22,29 +23,43 @@ public class BuildingDTO {
 	/**
 	 * @return the floor
 	 */
-	public Integer getFloor() {
+	public int getFloor() {
 		return floor;
 	}
 
 	/**
 	 * @param floor the floor to set
 	 */
-	public void setFloor(Integer floor) {
+	public void setFloor(int floor) {
 		this.floor = floor;
 	}
 
 	/**
-	 * @return the price
+	 * @return the beforePrice
 	 */
-	public Long getPrice() {
-		return price;
+	public long getBeforePrice() {
+		return beforePrice;
 	}
 
 	/**
-	 * @param price the price to set
+	 * @param beforePrice the beforePrice to set
 	 */
-	public void setPrice(Long price) {
-		this.price = price;
+	public void setBeforePrice(long beforePrice) {
+		this.beforePrice = beforePrice;
+	}
+
+	/**
+	 * @return the afterPrice
+	 */
+	public long getAfterPrice() {
+		return afterPrice;
+	}
+
+	/**
+	 * @param afterPrice the afterPrice to set
+	 */
+	public void setAfterPrice(long afterPrice) {
+		this.afterPrice = afterPrice;
 	}
 
 }
