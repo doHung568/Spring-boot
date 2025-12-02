@@ -5,6 +5,7 @@ public class BuildingDTO {
 	private int floor;
 	private long beforePrice;
 	private long afterPrice;
+	private String address;
 
 	/**
 	 * @return the name
@@ -60,6 +61,20 @@ public class BuildingDTO {
 	 */
 	public void setAfterPrice(long afterPrice) {
 		this.afterPrice = afterPrice;
+	}
+
+	/**
+	 * @return the address
+	 */
+	public String getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 }
