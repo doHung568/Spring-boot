@@ -18,10 +18,9 @@ public class BuildingServiceImpl implements BuildingService {
 
 	@Override
 	public List<BuildingDTO> findAll(String name) {
+		List<BuildingDTO> listBuildingDTOs = new ArrayList<>();
 		// go to Data Access Layer to get data
 		List<BuildingEntity> listBuildingEntities = buildingRepository.findAll(name);
-
-		List<BuildingDTO> listBuildingDTOs = new ArrayList<>();
 
 		for (BuildingEntity item : listBuildingEntities) {
 			BuildingDTO building = new BuildingDTO();
@@ -29,6 +28,27 @@ public class BuildingServiceImpl implements BuildingService {
 			building.setFloor(item.getFloor());
 			building.setBeforePrice(item.getPrice());
 			building.setAfterPrice((long) (item.getPrice() * (1 - item.getDiscountPercent())));
+			building.setAddress(item.getAdress());
+
+			listBuildingDTOs.add(building);
+		}
+
+		return listBuildingDTOs;
+	}
+
+	@Override
+	public List<BuildingDTO> search(String name, String address) {
+		List<BuildingDTO> listBuildingDTOs = new ArrayList<BuildingDTO>();
+
+		// go to Data Access layer to get data
+		List<BuildingEntity> listBuildingEntities = buildingRepository.search(name, address);
+		for (BuildingEntity item : listBuildingEntities) {
+			BuildingDTO building = new BuildingDTO();
+			building.setName(item.getName());
+			building.setFloor(item.getFloor());
+			building.setBeforePrice(item.getPrice());
+			building.setAfterPrice((long) (item.getPrice() * (1 - item.getDiscountPercent())));
+			building.setAddress(item.getAdress());
 			listBuildingDTOs.add(building);
 		}
 

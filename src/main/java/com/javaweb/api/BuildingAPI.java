@@ -21,4 +21,14 @@ public class BuildingAPI {
 
 		return result;
 	}
+
+	// search building by name and address
+	@GetMapping("/test-search")
+	public List<BuildingDTO> searchBuilding(@RequestParam(value = "name", required = false) String name,
+			@RequestParam(value = "address", required = false) String address) {
+		// go to business logic layer to handle
+		List<BuildingDTO> result = buildingService.search(name, address);
+
+		return result;
+	}
 }
