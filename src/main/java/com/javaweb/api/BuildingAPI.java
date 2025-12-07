@@ -1,38 +1,34 @@
 package com.javaweb.api;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.javaweb.beans.BuildingDTO;
-
-import customException.FieldRequiredException;
+import com.javaweb.model.BuildingDTO;
+import com.javaweb.service.BuildingService;
 
 @RestController
 public class BuildingAPI {
-	@GetMapping("/test-custom-exception")
-	// return Object
-	public Object getBuilding(@RequestBody BuildingDTO buildingDTO) {
-		// validate buildingDTO
-		isNullOrEmpty(buildingDTO);
-		// else return Success
-		return "Success";
+	@Autowired
+	private BuildingService buildingService;
+
+	@GetMapping("/test-connection")
+	public List<BuildingDTO> getBuilding(@RequestParam(value = "name") String name) {
+		List<BuildingDTO> result = buildingService.findAll(name);
+
+		return result;
 	}
 
-	// check is input null or empty
-	private void isNullOrEmpty(BuildingDTO buildingDTO) {
-		if (buildingDTO.getName() == null || buildingDTO.getName().equals("") || buildingDTO.getFloor() == null
-				|| buildingDTO.getPrice() == null) {
-			// return name of exception
-			// when throw exception -> Spring MVC scan @ExceptionHanlder
-			throw new FieldRequiredException("Input can not be empty");
-		}
-	}
+	// search building by name and address
+	@GetMapping("/test-search")
+	public List<BuildingDTO> searchBuilding(@RequestParam(value = "name", required = false) String name,
+			@RequestParam(value = "address", required = false) String address) {
+		// go to business logic layer to handle
+		List<BuildingDTO> result = buildingService.search(name, address);
 
-	@GetMapping("/test-controllerAdvice")
-	public void test() {
-
-		System.out.println(5 / 0);
-
+		return result;
 	}
 }
