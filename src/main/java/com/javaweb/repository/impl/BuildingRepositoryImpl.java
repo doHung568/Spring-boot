@@ -1,9 +1,7 @@
 package com.javaweb.repository.impl;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,43 +10,39 @@ import org.springframework.stereotype.Repository;
 
 import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.entity.BuildingEntity;
+import com.javaweb.utils.ConnectionUtil;
+import com.javaweb.utils.StringUtil;
 
 @Repository
 public class BuildingRepositoryImpl implements BuildingRepository {
-
-	static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=DB_JAVA;encrypt=false;trustServerCertificate=true";
-	static final String USER = "sa";
-	static final String PASSWORD = "123456";
 
 	@Override
 	public List<BuildingEntity> findAll(String name) {
 		String sql = "SELECT * FROM building where building_name like '%" + name + "%'";
 		List<BuildingEntity> listBuildingEntities = new ArrayList<>();
 		try {
-			// Load driver
-			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-
 			// Create connection
-			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-			// create query
+			Connection conn = ConnectionUtil.getConnection();
 
+			// create query
 			Statement stmt = conn.createStatement();
+
+			// execute query
 			ResultSet rs = stmt.executeQuery(sql);
 
+			// get DB
 			while (rs.next()) {
 				BuildingEntity buildingEntity = new BuildingEntity();
 				buildingEntity.setName(rs.getString("building_name"));
 				buildingEntity.setFloor(rs.getInt("floor"));
 				buildingEntity.setPrice(rs.getLong("price"));
 				buildingEntity.setDiscountPercent(rs.getDouble("discount_percent"));
-
+				buildingEntity.setAdress(rs.getString("address"));
+				// add into list
 				listBuildingEntities.add(buildingEntity);
 			}
-		} catch (ClassNotFoundException e) {
-			System.out.println("Không tìm thấy JDBC Driver!");
-			e.printStackTrace();
-		} catch (SQLException e) {
-			System.out.println("Lỗi kết nối SQL Server!");
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return listBuildingEntities;
@@ -58,39 +52,37 @@ public class BuildingRepositoryImpl implements BuildingRepository {
 	public List<BuildingEntity> search(String name, String address) {
 		// sql query
 		StringBuilder sql = new StringBuilder("SELECT * FROM BUILDING WHERE 1 = 1");
-		if (name != null && !name.equals("")) {
+		if (StringUtil.isValidString(name)) {
 			sql.append(" AND building_name like '%" + name + "%'");
 		}
 
-		if (address != null && !address.equals("")) {
+		if (StringUtil.isValidString(address)) {
 			sql.append(" AND address like '%" + address + "%'");
 		}
 		List<BuildingEntity> listBuildingEntities = new ArrayList<>();
 		try {
-			// Load driver
-			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
 			// Create connection
-			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			Connection conn = ConnectionUtil.getConnection();
 			// create query
-
 			Statement stmt = conn.createStatement();
+
+			// execute query
 			ResultSet rs = stmt.executeQuery(sql.toString());
 
 			while (rs.next()) {
+				// get DB
 				BuildingEntity buildingEntity = new BuildingEntity();
 				buildingEntity.setName(rs.getString("building_name"));
 				buildingEntity.setFloor(rs.getInt("floor"));
 				buildingEntity.setPrice(rs.getLong("price"));
 				buildingEntity.setDiscountPercent(rs.getDouble("discount_percent"));
 				buildingEntity.setAdress(rs.getString("address"));
+				// add into list
 				listBuildingEntities.add(buildingEntity);
 			}
-		} catch (ClassNotFoundException e) {
-			System.out.println("Không tìm thấy JDBC Driver!");
-			e.printStackTrace();
-		} catch (SQLException e) {
-			System.out.println("Lỗi kết nối SQL Server!");
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return listBuildingEntities;
