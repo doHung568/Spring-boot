@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.javaweb.converter.BuildingDTOConverter;
 import com.javaweb.model.BuildingDTO;
 import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.entity.BuildingEntity;
@@ -16,21 +17,18 @@ public class BuildingServiceImpl implements BuildingService {
 	@Autowired
 	private BuildingRepository buildingRepository;
 
+	@Autowired
+	private BuildingDTOConverter buildingDTOConverter;
+
 	@Override
 	public List<BuildingDTO> findAll(String name) {
 		List<BuildingDTO> listBuildingDTOs = new ArrayList<>();
 		// go to Data Access Layer to get data
 		List<BuildingEntity> listBuildingEntities = buildingRepository.findAll(name);
-
+		// convert Entity -> DTO
 		for (BuildingEntity item : listBuildingEntities) {
-			BuildingDTO building = new BuildingDTO();
-			building.setName(item.getName());
-			building.setFloor(item.getFloor());
-			building.setBeforePrice(item.getPrice());
-			building.setAfterPrice((long) (item.getPrice() * (1 - item.getDiscountPercent())));
-			building.setAddress(item.getAdress());
-
-			listBuildingDTOs.add(building);
+			BuildingDTO buildingDTO = buildingDTOConverter.toDTO(item);
+			listBuildingDTOs.add(buildingDTO);
 		}
 
 		return listBuildingDTOs;
@@ -42,14 +40,10 @@ public class BuildingServiceImpl implements BuildingService {
 
 		// go to Data Access layer to get data
 		List<BuildingEntity> listBuildingEntities = buildingRepository.search(name, address);
+		// convert Entity -> DTO
 		for (BuildingEntity item : listBuildingEntities) {
-			BuildingDTO building = new BuildingDTO();
-			building.setName(item.getName());
-			building.setFloor(item.getFloor());
-			building.setBeforePrice(item.getPrice());
-			building.setAfterPrice((long) (item.getPrice() * (1 - item.getDiscountPercent())));
-			building.setAddress(item.getAdress());
-			listBuildingDTOs.add(building);
+			BuildingDTO buildingDTO = buildingDTOConverter.toDTO(item);
+			listBuildingDTOs.add(buildingDTO);
 		}
 
 		return listBuildingDTOs;

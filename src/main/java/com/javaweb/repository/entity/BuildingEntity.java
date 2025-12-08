@@ -5,7 +5,7 @@ public class BuildingEntity {
 	private int floor;
 	private long price;
 	private double discountPercent;
-	private String adress;
+	private String address;
 
 	/**
 	 * @return the name
@@ -66,15 +66,15 @@ public class BuildingEntity {
 	/**
 	 * @return the adress
 	 */
-	public String getAdress() {
-		return adress;
+	public String getAddress() {
+		return address;
 	}
 
 	/**
 	 * @param adress the adress to set
 	 */
-	public void setAdress(String adress) {
-		this.adress = adress;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 }
