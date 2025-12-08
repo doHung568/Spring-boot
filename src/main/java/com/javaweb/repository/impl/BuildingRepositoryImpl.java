@@ -37,7 +37,7 @@ public class BuildingRepositoryImpl implements BuildingRepository {
 				buildingEntity.setFloor(rs.getInt("floor"));
 				buildingEntity.setPrice(rs.getLong("price"));
 				buildingEntity.setDiscountPercent(rs.getDouble("discount_percent"));
-				buildingEntity.setAdress(rs.getString("address"));
+				buildingEntity.setAddress(rs.getString("address"));
 				// add into list
 				listBuildingEntities.add(buildingEntity);
 			}
@@ -77,7 +77,7 @@ public class BuildingRepositoryImpl implements BuildingRepository {
 				buildingEntity.setFloor(rs.getInt("floor"));
 				buildingEntity.setPrice(rs.getLong("price"));
 				buildingEntity.setDiscountPercent(rs.getDouble("discount_percent"));
-				buildingEntity.setAdress(rs.getString("address"));
+				buildingEntity.setAddress(rs.getString("address"));
 				// add into list
 				listBuildingEntities.add(buildingEntity);
 			}
