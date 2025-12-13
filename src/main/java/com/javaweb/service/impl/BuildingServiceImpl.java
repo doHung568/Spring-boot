@@ -26,7 +26,7 @@ public class BuildingServiceImpl implements BuildingService {
 	private BuildingSearchBuilderConverter builderConverter;
 
 	@Override
-	public List<BuildingDTO> searchUsingBuilder(Map<String, String> params) {
+	public List<BuildingDTO> searchUsingBuilder(Map<String, Object> params) {
 		// create list to store list building dto
 		List<BuildingDTO> listBuildingDTOs = new ArrayList<BuildingDTO>();
 		// create list to store list building entity

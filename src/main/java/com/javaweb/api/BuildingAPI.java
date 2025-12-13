@@ -18,7 +18,7 @@ public class BuildingAPI {
 	private BuildingService buildingService;
 
 	@GetMapping("/test-builder")
-	public List<BuildingDTO> testBuilder(@RequestParam Map<String, String> params) {
+	public List<BuildingDTO> testBuilder(@RequestParam Map<String, Object> params) {
 		List<BuildingDTO> listBuildingDTOs = buildingService.searchUsingBuilder(params);
 		return listBuildingDTOs;
 	}

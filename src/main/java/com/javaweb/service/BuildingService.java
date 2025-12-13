@@ -7,5 +7,5 @@ import com.javaweb.model.BuildingDTO;
 
 public interface BuildingService {
 
-	public List<BuildingDTO> searchUsingBuilder(Map<String, String> params);
+	public List<BuildingDTO> searchUsingBuilder(Map<String, Object> params);
 }
