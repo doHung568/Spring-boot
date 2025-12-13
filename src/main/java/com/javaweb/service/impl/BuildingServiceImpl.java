@@ -2,11 +2,13 @@ package com.javaweb.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javaweb.converter.BuildingDTOConverter;
+import com.javaweb.converter.BuildingSearchBuilderConverter;
 import com.javaweb.model.BuildingDTO;
 import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.entity.BuildingEntity;
@@ -20,32 +22,21 @@ public class BuildingServiceImpl implements BuildingService {
 	@Autowired
 	private BuildingDTOConverter buildingDTOConverter;
 
-	@Override
-	public List<BuildingDTO> findAll(String name) {
-		List<BuildingDTO> listBuildingDTOs = new ArrayList<>();
-		// go to Data Access Layer to get data
-		List<BuildingEntity> listBuildingEntities = buildingRepository.findAll(name);
-		// convert Entity -> DTO
-		for (BuildingEntity item : listBuildingEntities) {
-			BuildingDTO buildingDTO = buildingDTOConverter.toDTO(item);
-			listBuildingDTOs.add(buildingDTO);
-		}
-
-		return listBuildingDTOs;
-	}
+	@Autowired
+	private BuildingSearchBuilderConverter builderConverter;
 
 	@Override
-	public List<BuildingDTO> search(String name, String address) {
+	public List<BuildingDTO> searchUsingBuilder(Map<String, Object> params) {
+		// create list to store list building dto
 		List<BuildingDTO> listBuildingDTOs = new ArrayList<BuildingDTO>();
-
-		// go to Data Access layer to get data
-		List<BuildingEntity> listBuildingEntities = buildingRepository.search(name, address);
-		// convert Entity -> DTO
-		for (BuildingEntity item : listBuildingEntities) {
-			BuildingDTO buildingDTO = buildingDTOConverter.toDTO(item);
+		// create list to store list building entity
+		List<BuildingEntity> listBuildingEntities = buildingRepository
+				.search(builderConverter.toBuildingSearchBuilder(params));
+		for (BuildingEntity buildingEntity : listBuildingEntities) {
+			BuildingDTO buildingDTO = buildingDTOConverter.toDTO(buildingEntity);
+			// add into list
 			listBuildingDTOs.add(buildingDTO);
 		}
-
 		return listBuildingDTOs;
 	}
 

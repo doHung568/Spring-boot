@@ -2,9 +2,9 @@ package com.javaweb.model;
 
 public class BuildingDTO {
 	private String name;
-	private int floor;
-	private long beforePrice;
-	private long afterPrice;
+	private Integer floor;
+	private Long beforePrice;
+	private Long afterPrice;
 	private String address;
 
 	/**
@@ -24,42 +24,42 @@ public class BuildingDTO {
 	/**
 	 * @return the floor
 	 */
-	public int getFloor() {
+	public Integer getFloor() {
 		return floor;
 	}
 
 	/**
 	 * @param floor the floor to set
 	 */
-	public void setFloor(int floor) {
+	public void setFloor(Integer floor) {
 		this.floor = floor;
 	}
 
 	/**
 	 * @return the beforePrice
 	 */
-	public long getBeforePrice() {
+	public Long getBeforePrice() {
 		return beforePrice;
 	}
 
 	/**
 	 * @param beforePrice the beforePrice to set
 	 */
-	public void setBeforePrice(long beforePrice) {
+	public void setBeforePrice(Long beforePrice) {
 		this.beforePrice = beforePrice;
 	}
 
 	/**
 	 * @return the afterPrice
 	 */
-	public long getAfterPrice() {
+	public Long getAfterPrice() {
 		return afterPrice;
 	}
 
 	/**
 	 * @param afterPrice the afterPrice to set
 	 */
-	public void setAfterPrice(long afterPrice) {
+	public void setAfterPrice(Long afterPrice) {
 		this.afterPrice = afterPrice;
 	}
 
